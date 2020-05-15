@@ -13,17 +13,22 @@ class Tracker extends Wrapper {
         this.addPageMethodWrapper(this.methodTracker());
     }
 
+    /**
+     * @description: 元素埋点
+     * @param {type} 
+     * @return: 
+     */
     elementTracker() {
         // elementTracker变量名尽量不要修改，因为他和wxml下的名字是相对应的
         const elementTracker = (e) => {
             const tracks = this.findActivePageTracks('element');
-            const { data } = getActivePage();
+            const { buried } = getActivePage();
             tracks.forEach((track) => {
                 getBoundingClientRect(track.element).then((res) => {
                     res.boundingClientRect.forEach((item) => {
                         const isHit = isClickTrackArea(e, item, res.scrollOffset);
                         track.dataset = item.dataset;
-                        isHit && report(track, data);
+                        isHit && report(track, buried);
                     });
                 });
             });
@@ -31,17 +36,22 @@ class Tracker extends Wrapper {
         return elementTracker;
     }
 
+    /**
+     * @description: 方法埋点
+     * @param {type} 
+     * @return: 
+     */
     methodTracker() {
         return (page, methodName, args = {}) => {
             const tracks = this.findActivePageTracks('method');
-            const { data } = getActivePage();
+            const { buried } = getActivePage();
             const { dataset } = args.currentTarget || {};
             tracks.forEach((track) => {
                 if (track.method === methodName) {
                     track.dataset = dataset;
-                    report(track, data);
+                    report(track, buried);
                 }
-            });
+            })
         };
     }
 

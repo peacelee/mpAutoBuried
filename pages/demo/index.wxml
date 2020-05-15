@@ -1,4 +1,4 @@
-<view>
-    demo
+<view catchtap='elementTracker'>
+    <button class="test">demo</button>
+    <button class="test1">demo1</button>
 </view>
-  
