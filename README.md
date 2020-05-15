@@ -1,2 +1,2 @@
 # mpAutoBuried
-auto buried of miniprogram
+微信小程序自动化埋点
