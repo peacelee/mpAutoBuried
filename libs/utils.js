@@ -1,18 +1,18 @@
 /**
- * 获取页面元素信息
+ * @description: 获取页面元素信息
  * @param {String} element 元素class或者id
  * @returns {Promise}
  */
 export const getBoundingClientRect = function (element) {
-    return new Promise((reslove) => {
+    return new Promise((resolve) => {
         const query = wx.createSelectorQuery();
         query.selectAll(element).boundingClientRect();
         query.selectViewport().scrollOffset();
-        query.exec(res => reslove({ boundingClientRect: res[0], scrollOffset: res[1] }));
+        query.exec(res => resolve({ boundingClientRect: res[0], scrollOffset: res[1] }));
     });
 };
 /**
- * 判断点击是否落在目标元素
+ * @description: 判断点击是否落在目标元素
  * @param {Object} clickInfo 用户点击坐标
  * @param {Object} boundingClientRect 目标元素信息
  * @param {Object} scrollOffset 页面位置信息
@@ -30,7 +30,7 @@ export const isClickTrackArea = function (clickInfo, boundingClientRect, scrollO
 };
 
 /**
- * 获取当前页面
+ * @description: 获取当前页面
  * @returns {Object} 当前页面Page对象
  */
 export const getActivePage = function () {
@@ -42,7 +42,7 @@ export const getActivePage = function () {
 };
 
 /**
- * 获取前一页面
+ * @description: 获取前一页面
  * @returns {Object} 当前页面Page对象
  */
 export const getPrevPage = function () {
@@ -51,8 +51,4 @@ export const getPrevPage = function () {
       return curPages[curPages.length - 2];
     }
     return {};
-};
-
-export const _isPromise = function (value) {
-    return value && Object.prototype.toString.call(value) === '[object Promise]';
 };

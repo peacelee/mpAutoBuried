@@ -1,10 +1,16 @@
 import Wrapper from './wrapper';
-import { getBoundingClientRect, isClickTrackArea, getActivePage } from './helper';
+import {
+    getBoundingClientRect,
+    isClickTrackArea,
+    getActivePage
+} from './utils';
 import report from './report';
 
 class Tracker extends Wrapper {
-    constructor({ tracks, isUsingPlugin }) {
-        super(isUsingPlugin);
+    constructor({
+        tracks
+    }) {
+        super();
         // 埋点配置信息
         this.tracks = tracks;
         // 自动给每个page增加elementTracker方法，用作元素埋点
@@ -15,20 +21,30 @@ class Tracker extends Wrapper {
 
     /**
      * @description: 元素埋点
-     * @param {type} 
-     * @return: 
+     * @param {Void} 
+     * @return {Function}
      */
     elementTracker() {
         // elementTracker变量名尽量不要修改，因为他和wxml下的名字是相对应的
         const elementTracker = (e) => {
-            const tracks = this.findActivePageTracks('element');
-            const { buried } = getActivePage();
+            const {tracks, page} = this.findActivePageTracks('element');
+            const {
+                buried
+            } = getActivePage();
             tracks.forEach((track) => {
                 getBoundingClientRect(track.element).then((res) => {
                     res.boundingClientRect.forEach((item) => {
                         const isHit = isClickTrackArea(e, item, res.scrollOffset);
-                        track.dataset = item.dataset;
-                        isHit && report(track, buried);
+                        if (isHit) {
+                            const data = {
+                                buried,
+                                page,
+                                track,
+                                dataset: item.dataset
+                            };
+                            console.log('data:', data);
+                            console.log('===================')
+                        }
                     });
                 });
             });
@@ -38,39 +54,55 @@ class Tracker extends Wrapper {
 
     /**
      * @description: 方法埋点
-     * @param {type} 
-     * @return: 
+     * @param {Void} 
+     * @return {Function}
      */
     methodTracker() {
-        return (page, methodName, args = {}) => {
-            const tracks = this.findActivePageTracks('method');
-            const { buried } = getActivePage();
-            const { dataset } = args.currentTarget || {};
+        return (currentPage, methodName, args = {}) => {
+            const {tracks, page} = this.findActivePageTracks('method');
+            const {
+                buried
+            } = getActivePage();
+            const {
+                dataset
+            } = args.currentTarget || {};
             tracks.forEach((track) => {
                 if (track.method === methodName) {
-                    track.dataset = dataset;
-                    report(track, buried);
+                    const data = {
+                        buried,
+                        page,
+                        track,
+                        dataset: dataset
+                    }
+                    console.log('data:', data);
+                    console.log('===================')
+                    // report(track, buried);
                 }
             })
         };
     }
 
     /**
-     * 获取当前页面的埋点配置
+     * @description: 获取当前页面的埋点配置
      * @param {String} type 返回的埋点配置，options: method/element
      * @returns {Object}
      */
     findActivePageTracks(type) {
         try {
-            const { route } = getActivePage();
-            const pageTrackConfig = this.tracks.find(item => item.path === route) || {};
+            const {
+                route
+            } = getActivePage();
+            const pageTrackConfig = this.tracks.find(item => item.page.path === route) || {};
             let tracks = {};
             if (type === 'method') {
                 tracks = pageTrackConfig.methodTracks || [];
             } else if (type === 'element') {
                 tracks = pageTrackConfig.elementTracks || [];
             }
-            return tracks;
+            return {
+                tracks,
+                page: pageTrackConfig.page || {}
+            };
         } catch (e) {
             return {};
         }

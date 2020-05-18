@@ -1,15 +1,17 @@
 export default {
     page: {
-        path: 'pages/demo/index',
-        pageName: 'home'
+        path: 'pages/home/index',
+        name: 'home'
     },
     elementTracks: [
         {
             element: '.test',
+            clickId: 'clickTestBtn',
             dataKeys: ['a']
         },
         {
             element: '.test1',
+            clickId: 'clickTest1Btn',
             dataKeys: ['b']
         }
     ],

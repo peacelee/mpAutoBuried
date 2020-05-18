@@ -1,4 +1,6 @@
-import demo from './demo'
+import home from './home'
+import store from './store'
 export default [
-    demo
+    home,
+    store
 ]
