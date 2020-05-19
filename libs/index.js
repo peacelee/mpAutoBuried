@@ -1,12 +1,12 @@
-import Wrapper from './wrapper';
+import Insert from './insert';
 import {
     getBoundingClientRect,
     isClickTrackArea,
     getActivePage
 } from './utils';
-import report from './report';
+import {log} from './log';
 
-class Tracker extends Wrapper {
+class Tracker extends Insert {
     constructor({
         tracks
     }) {
@@ -25,7 +25,7 @@ class Tracker extends Wrapper {
      * @return {Function}
      */
     elementTracker() {
-        // elementTracker变量名尽量不要修改，因为他和wxml下的名字是相对应的
+        // 元素事件监听
         const elementTracker = (e) => {
             const {tracks, page} = this.findActivePageTracks('element');
             const {
@@ -42,8 +42,7 @@ class Tracker extends Wrapper {
                                 track,
                                 dataset: item.dataset
                             };
-                            console.log('data:', data);
-                            console.log('===================')
+                            log(data)
                         }
                     });
                 });
@@ -58,7 +57,7 @@ class Tracker extends Wrapper {
      * @return {Function}
      */
     methodTracker() {
-        return (currentPage, methodName, args = {}) => {
+        return (methodName, args = {}) => {
             const {tracks, page} = this.findActivePageTracks('method');
             const {
                 buried
@@ -74,9 +73,7 @@ class Tracker extends Wrapper {
                         track,
                         dataset: dataset
                     }
-                    console.log('data:', data);
-                    console.log('===================')
-                    // report(track, buried);
+                    log(data)
                 }
             })
         };

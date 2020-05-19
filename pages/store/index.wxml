@@ -1,2 +1,1 @@
-<!--pages/store/index.wxml-->
-<text>pages/store/index.wxml</text>
+<view bindtap="clickStoreBtn" data-id="123">按钮</view>>

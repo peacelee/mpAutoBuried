@@ -3,7 +3,7 @@ const globalVarApp = App;
 // 小程序原Page对象
 const globalVarPage = Page; 
 
-class Wrapper {
+class Insert {
     constructor() {
         this.injectPageMethods = [];
         this.injectAppMethods = [];
@@ -25,7 +25,7 @@ class Wrapper {
             const result = methodFunction && methodFunction.apply(this, args);
             const methodExecutor = () => {
                 methods.forEach((fn) => {
-                    fn.apply(this, [target, methodName, ...args]);
+                    fn.apply(this, [methodName, ...args]);
                 })
             };
             try {
@@ -110,4 +110,4 @@ class Wrapper {
     }
 }
 
-export default Wrapper;
+export default Insert;

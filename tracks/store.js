@@ -9,7 +9,7 @@ export default {
     methodTracks: [
         {
             method: 'onShow',
-            dataKeys: ['c', 'd'],
+            dataKeys: [],
         }
     ],
 
