@@ -1,4 +1,5 @@
-<view catchtap="elementTracker">
+<view catchtap="elementTracker" class="container">
+    <header></header>
     <button class="test" data-id='123' data-userAction="{a:1}" bindtap="goToStore">demo</button>
     <button class="test1">demo1</button>
 </view>
