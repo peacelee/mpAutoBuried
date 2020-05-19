@@ -1,5 +1,7 @@
 <view catchtap="elementTracker" class="container">
     <header></header>
-    <button class="test" data-id='123' data-userAction="{a:1}" bindtap="goToStore">demo</button>
-    <button class="test1">demo1</button>
+    <view style="height:20rpx"></view>
+    <button class="test" data-id='123' data-userAction="{a:1}" bindtap="goToStore">click to store</button>
+    <view style="height:20rpx"></view>
+    <button class="test1">click demo2</button>
 </view>

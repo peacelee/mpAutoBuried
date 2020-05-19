@@ -1,6 +1,6 @@
 <view>
     <button class="header" data-id="header">
-        I am header
+        click header (component)
     </button>
 </view>
   
