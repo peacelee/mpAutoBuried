@@ -32,8 +32,28 @@ App({
 </view>
 ```
 
+### 3. 页面逻辑
+/pages/home/index.js
+```javascript
+Page({
+    buried: {
+        a: 1,
+        b: 2,
+        c: 3
+    },
+    data: {
 
-### 2. 页面的描述文件
+    },
+    onLoad: function() {
+
+    },
+    onShow: function() {
+        
+    }
+})
+```
+
+### 4. 页面的描述文件
 /tracks/home.js
 ```javascript
 export default {
